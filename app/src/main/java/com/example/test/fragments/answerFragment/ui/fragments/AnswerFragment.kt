@@ -13,6 +13,9 @@ import com.example.test.fragments.answerFragment.viewmodel.AnswerViewModel
 import com.example.test.models.QuestionModel
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
+import android.content.Intent
+import android.net.Uri
+
 
 class AnswerFragment : Fragment() {
 
@@ -23,6 +26,8 @@ class AnswerFragment : Fragment() {
     private val itemAdapter = ItemAdapter<AnswerItem>()
 
     private val fastAdapter = FastAdapter.with(itemAdapter)
+
+    private lateinit var questionModel: QuestionModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,12 +50,25 @@ class AnswerFragment : Fragment() {
             }
             items.observe(viewLifecycleOwner) {
                 bindView(it)
+                questionModel = it
             }
+        }
+        binding.answerAvatar.setOnClickListener {
+            openUserProfile()
         }
     }
 
     private fun setUpRecycler() {
         binding.recyclerViewAnswer.adapter = fastAdapter
+    }
+
+    private fun openUserProfile() {
+        binding.answerAvatar.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(questionModel.owner.link)
+            }
+            requireActivity().startActivity(intent)
+        }
     }
 
     private fun bindView(item: QuestionModel) {
