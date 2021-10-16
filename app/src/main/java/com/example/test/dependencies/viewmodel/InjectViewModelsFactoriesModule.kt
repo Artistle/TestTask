@@ -1,8 +1,6 @@
-package com.example.test.fragments.enterRequest.di
+package com.example.test.dependencies.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.test.dependencies.viewmodel.AssistedSavedStateViewModelFactory
-import com.example.test.dependencies.viewmodel.ViewModelKey
 import com.example.test.fragments.answerFragment.viewmodel.AnswerViewModel
 import com.example.test.fragments.enterRequest.viewmodel.EnterRequestViewModel
 import com.squareup.inject.assisted.dagger2.AssistedModule
@@ -12,9 +10,9 @@ import dagger.multibindings.IntoMap
 
 @AssistedModule
 @Module(
-    includes = [AssistedInject_EnterRequestViewModelFactoriesModule::class]
+    includes = [AssistedInject_InjectViewModelsFactoriesModule::class]
 )
-interface EnterRequestViewModelFactoriesModule {
+interface InjectViewModelsFactoriesModule {
 
     @Binds
     @IntoMap

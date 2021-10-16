@@ -1,8 +1,8 @@
 package com.example.test.dependencies
 
 import com.example.test.MainActivity
+import com.example.test.dependencies.viewmodel.InjectViewModelsFactoriesModule
 import com.example.test.fragments.answerFragment.ui.fragments.AnswerFragment
-import com.example.test.fragments.enterRequest.di.EnterRequestViewModelFactoriesModule
 import com.example.test.fragments.enterRequest.ui.fragments.EnterRequestFragment
 import com.example.test.navigation.di.NavigationModule
 import com.example.test.network.di.NetworkModule
@@ -15,7 +15,7 @@ import javax.inject.Singleton
     modules = [NavigationModule::class,
         RepositoryModule::class,
         NetworkModule::class,
-        EnterRequestViewModelFactoriesModule::class]
+        InjectViewModelsFactoriesModule::class]
 )
 interface AppComponent {
 
