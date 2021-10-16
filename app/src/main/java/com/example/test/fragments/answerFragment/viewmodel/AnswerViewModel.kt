@@ -30,10 +30,14 @@ class AnswerViewModel @AssistedInject constructor(
 
     private val item: QuestionModel = savedStateHandle["ITEMS"] ?: error("can't get item")
 
+    init {
+        load()
+    }
+
     @SuppressLint("CheckResult")
-    private fun load(ids: Int) {
+    private fun load() {
         compositeDisposable.add(repository
-            .getListAnswer(ids)
+            .getListAnswer(item.question_id)
             .doOnError { throwable ->
                 _throwableLiveData.value = throwable.localizedMessage
             }
@@ -41,11 +45,6 @@ class AnswerViewModel @AssistedInject constructor(
                 _answerLiveData.value = result
             })
 
-    }
-
-    fun setItem(item: QuestionModel) {
-        _items.value = item
-        _items.value?.question_id?.let { load(it) }
     }
 
     fun setUpItems() {
