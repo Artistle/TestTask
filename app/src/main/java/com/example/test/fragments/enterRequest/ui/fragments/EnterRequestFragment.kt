@@ -8,21 +8,25 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.test.App
+import com.example.test.R
 import com.example.test.Screen
+import com.example.test.base.BaseFragment
+import com.example.test.base.InjectingSavedStateViewModelFactory
 import com.example.test.databinding.QuestionFragmentBinding
 import com.example.test.fragments.enterRequest.ui.items.QuestionItem
 import com.example.test.fragments.enterRequest.viewmodel.EnterRequestViewModel
-import com.github.terrakok.cicerone.Router
+import com.example.test.navigation.Navigation
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import javax.inject.Inject
 
-class EnterRequestFragment : Fragment() {
+class EnterRequestFragment : BaseFragment<EnterRequestViewModel> (EnterRequestViewModel::class, R.layout.question_fragment) {
 
     @Inject
-    lateinit var router: Router
+    override lateinit var abstractViewModelFactory: InjectingSavedStateViewModelFactory
 
-    private val viewModel: EnterRequestViewModel by viewModels()
+    @Inject
+    lateinit var navigation: Navigation
 
     private lateinit var binding: QuestionFragmentBinding
 
@@ -30,7 +34,7 @@ class EnterRequestFragment : Fragment() {
 
     private val fastAdapter = FastAdapter.with(itemAdapter).apply {
         onPreClickListener = { _, _, item, _ ->
-            router.navigateTo(Screen.answerScreen(item.model))
+            navigation.navigationRouter().navigateTo(Screen.answerScreen(item.model))
             true
         }
     }

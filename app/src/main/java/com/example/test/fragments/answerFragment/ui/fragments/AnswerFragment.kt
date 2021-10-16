@@ -1,11 +1,10 @@
 package com.example.test.fragments.answerFragment.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.test.databinding.AnswerFragmentBinding
 import com.example.test.fragments.answerFragment.ui.items.AnswerItem
@@ -15,11 +14,17 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import android.content.Intent
 import android.net.Uri
+import com.example.test.App
+import com.example.test.R
+import com.example.test.base.BaseFragment
+import com.example.test.base.InjectingSavedStateViewModelFactory
+import javax.inject.Inject
 
 
-class AnswerFragment : Fragment() {
+class AnswerFragment : BaseFragment<AnswerViewModel> (AnswerViewModel::class, R.layout.answer_fragment) {
 
-    private val viewModel: AnswerViewModel by viewModels()
+    @Inject
+    override lateinit var abstractViewModelFactory: InjectingSavedStateViewModelFactory
 
     private lateinit var binding: AnswerFragmentBinding
 
@@ -28,6 +33,11 @@ class AnswerFragment : Fragment() {
     private val fastAdapter = FastAdapter.with(itemAdapter)
 
     private lateinit var questionModel: QuestionModel
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        App.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +52,7 @@ class AnswerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpRecycler()
         viewModel.apply {
-            setItem(arguments?.get("ITEMS") as QuestionModel)
+            setUpItems()
             answerLiveData.observe(viewLifecycleOwner) {
                 it.models?.map { answer ->
                     itemAdapter.add(AnswerItem(answer))
