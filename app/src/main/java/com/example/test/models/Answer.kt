@@ -1,5 +1,7 @@
 package com.example.test.models
 
+import java.io.Serializable
+
 data class AnswerModel(
     val answer_id: Int,
     val content_license: String,
@@ -10,14 +12,14 @@ data class AnswerModel(
     val owner: AnswerOwner,
     val question_id: Int,
     val score: Int
-)
+) : Serializable
 
 data class Answer(
     val has_more: Boolean,
     val models: List<AnswerModel>? = null,
     val quota_max: Int = 0,
     val quota_remaining: Int = 0
-)
+) : Serializable
 
 data class AnswerOwner(
     val account_id: Int,
@@ -27,4 +29,4 @@ data class AnswerOwner(
     val reputation: Int,
     val user_id: Int,
     val user_type: String
-)
+) : Serializable

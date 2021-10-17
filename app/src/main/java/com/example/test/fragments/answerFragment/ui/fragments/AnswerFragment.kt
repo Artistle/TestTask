@@ -21,7 +21,8 @@ import com.example.test.base.InjectingSavedStateViewModelFactory
 import javax.inject.Inject
 
 
-class AnswerFragment : BaseFragment<AnswerViewModel> (AnswerViewModel::class, R.layout.answer_fragment) {
+class AnswerFragment :
+    BaseFragment<AnswerViewModel>(AnswerViewModel::class, R.layout.answer_fragment) {
 
     @Inject
     override lateinit var abstractViewModelFactory: InjectingSavedStateViewModelFactory
@@ -63,6 +64,10 @@ class AnswerFragment : BaseFragment<AnswerViewModel> (AnswerViewModel::class, R.
                 questionModel = it
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
         binding.answerAvatar.setOnClickListener {
             openUserProfile()
         }
@@ -73,12 +78,11 @@ class AnswerFragment : BaseFragment<AnswerViewModel> (AnswerViewModel::class, R.
     }
 
     private fun openUserProfile() {
-        binding.answerAvatar.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse(questionModel.owner.link)
-            }
-            requireActivity().startActivity(intent)
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(questionModel.owner.link)
         }
+        requireActivity().startActivity(intent)
+
     }
 
     private fun bindView(item: QuestionModel) {

@@ -15,27 +15,27 @@ class MainActivity: AppCompatActivity() {
     @Inject
     lateinit var navigation: Navigation
 
-    private lateinit var binding: ActivityMainBinding
+    private val navigationHolder by lazy { navigation.navigationHolder() }
+    private val navigationRouter by lazy { navigation.navigationRouter() }
+    private val navigator by lazy { AppNavigator(this, R.id.main_container) }
 
-    private lateinit var navigator: Navigator
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         App.appComponent.inject(this)
-
-        navigator = AppNavigator(this, R.id.main_container)
-        navigation.navigationRouter().newRootScreen(Screen.enterRequestScreen())
+        navigationRouter.newRootScreen(Screen.enterRequestScreen())
     }
 
     override fun onResume() {
         super.onResume()
-        navigation.navigationHolder().setNavigator(navigator)
+        navigationHolder.setNavigator(navigator)
     }
 
     override fun onPause() {
-        navigation.navigationHolder().removeNavigator()
+        navigationHolder.removeNavigator()
         super.onPause()
     }
 }

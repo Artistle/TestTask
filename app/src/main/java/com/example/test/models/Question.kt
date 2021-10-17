@@ -20,7 +20,7 @@ data class QuestionModel(
     val last_activity_date: Int,
     val last_edit_date: Int,
     val link: String,
-    val owner: AnswerOwner,
+    val owner: QuestionOwner,
     val protected_date: Int,
     val question_id: Int,
     val score: Int,

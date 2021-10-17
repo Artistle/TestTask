@@ -9,8 +9,7 @@ import kotlin.reflect.KClass
 abstract class BaseFragment<VM : ViewModel>(
     private val viewModelClass: KClass<out ViewModel>,
     @LayoutRes layoutRes: Int
-) :
-    Fragment(layoutRes) {
+) : Fragment(layoutRes) {
 
     abstract val abstractViewModelFactory: InjectingSavedStateViewModelFactory
 
@@ -20,7 +19,7 @@ abstract class BaseFragment<VM : ViewModel>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = abstractViewModelFactory.create(viewModelClass,this, getDefaultArgs())
+        viewModel = abstractViewModelFactory.create(viewModelClass, this, getDefaultArgs())
     }
 
     protected open fun getDefaultArgs(): Bundle? = arguments
