@@ -26,6 +26,12 @@ class MainActivity: AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         App.appComponent.inject(this)
+
+        /*
+         *
+         * TODO в этом месте есть проблема ЖЦ,при повороте экрана, открывается стартовый фрагмент
+         *
+         */
         navigationRouter.newRootScreen(Screen.enterRequestScreen())
     }
 

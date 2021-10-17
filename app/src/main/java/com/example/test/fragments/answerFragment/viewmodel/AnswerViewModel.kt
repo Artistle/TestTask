@@ -32,6 +32,7 @@ class AnswerViewModel @AssistedInject constructor(
 
     init {
         load()
+        _items.value = item
     }
 
     @SuppressLint("CheckResult")
@@ -48,7 +49,7 @@ class AnswerViewModel @AssistedInject constructor(
     }
 
     fun setUpItems() {
-        _items.value = item
+
     }
 
     @AssistedInject.Factory
